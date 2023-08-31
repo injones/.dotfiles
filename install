@@ -1,0 +1,10 @@
+#!/usr/bin/sh
+
+Installs="alacritty,i3,tmux"
+
+for folder in $(echo $Installs | sed "s/,/ /g")
+do
+    echo "stow $folder"
+    stow -D $folder -S $folder
+done
+
