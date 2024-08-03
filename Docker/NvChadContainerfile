@@ -1,0 +1,9 @@
+FROM alpine:3.17
+
+RUN apk add git nodejs neovim ripgrep build-base wget gdb unzip bash --update
+RUN git clone https://github.com/NvChad/NvChad ~/.config/nvim
+ADD https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip /root
+RUN mkdir -p /usr/share/fonts/ttf
+RUN unzip /root/JetBrainsMono.zip -d /usr/share/fonts/ttf
+
+ENTRYPOINT ["/bin/sh", "-c", "bash"]
