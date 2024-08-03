@@ -43,7 +43,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -92,7 +92,6 @@ fi
 #alias la='ls -A'
 #alias l='ls -CF'
 alias vim='nvim'
-alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -113,7 +112,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
 
 if [ -f ~/.local/scripts/functions.sh ]; then
     . ~/.local/scripts/functions.sh

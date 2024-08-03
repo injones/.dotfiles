@@ -39,50 +39,6 @@ go() {
         $cmd
 }
 
-#-v $HOME/.mozilla/firefox/g0nza781.Twitch/extensions:/usr/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384} \
-ff() {
-    if podman images --filter reference=firefox | grep -q "firefox"; then
-        firefoxDir=$1
-        if [[ ! -S /tmp/pulseaudio.socket ]]; then
-            pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
-            cat << EOF > /tmp/pulseaudio.client.conf
-default-server = unix:/tmp/pulseaudio.socket
-# Prevent a server running in the container
-autospawn = no
-daemon-binary = /bin/true
-# Prevent the use of shared memory
-enable-shm = false
-EOF
-        fi
-        if [[ -z $firefoxDir ]]; then
-            (podman run \
-                --rm \
-                -e DISPLAY \
-                -v /tmp/.X11-unix:/tmp/.X11-unix \
-                --env PULSE_SERVER=unix:/tmp/pulseaudio.socket \
-                --env PULSE_COOKIE=/tmp/pulseaudio.cookie \
-                --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
-                --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
-                -u 1000:1000 \
-                --security-opt label=type:container_runtime_t \
-                --memory 2048m \
-                firefox) &> /dev/null & disown
-        else
-            $firefoxDir=$(realpath $firefoxDir)
-            if [[ -e $firefoxDir ]]; then
-                (podman run \
-                    --rm \
-                    -e DISPLAY \
-                    -v /tmp/.X11-unix:/tmp/.X11-unix \
-                    -v "$firefoxDir":/root/.mozilla/firefox \
-                    --security-opt label=type:container_runtime_t \
-                    --memory 2048m \
-                    firefox) &> /dev/null & disown
-            fi
-        fi
-    fi
-}
-
 # launch godot
 godot() {
   p1="$1" # folder with godot project

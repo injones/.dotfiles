@@ -240,9 +240,6 @@ bindsym Print exec --no-startup-id "/usr/local/bin/flameshot gui"
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 20%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +20%
 
-# resize firefox for twitch.tv
-for_window [title="Twitch" class="firefox"] resize set 1338 1130; move left
-
 for_window [class="solanum"] floating enable
 # assign firefox to workspace 1
 #assign [class="firefox"] 1

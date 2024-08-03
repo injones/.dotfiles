@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "hello"
 if xrandr --listmonitors | grep "2:" ; then
 	source /home/happyduck/.screenlayout/three.sh
 elif xrandr --listmonitors | grep "1:" ; then
