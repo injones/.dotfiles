@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-Installs="alacritty,bash,i3,tmux,nvim,X,zathura,zk"
+Installs="alacritty,bash,glow,i3,tmux,nvim,X,zathura,zk"
 
 for folder in $(echo $Installs | sed "s/,/ /g")
 do

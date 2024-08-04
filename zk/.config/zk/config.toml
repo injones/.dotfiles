@@ -214,12 +214,16 @@ hist = "zk list --format path --delimiter0 --quiet $@ | xargs -t -0 git log --pa
 #conf = '$EDITOR "$ZK_NOTEBOOK_DIR/.zk/config.toml"'
 
 # searh notes by tags
-t = "zk edit --interactive --tag $argv"
+t = "zk edit --interactive --tag $@"
 
 # new journal entry
 daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal/daily"'
 
+# view journal entries
 journal = "zk edit --sort created- $ZK_NOTEBOOK_DIR/journal --interactive"
 
 # edit global config
 config = 'nvim "$HOME/.config/zk/config.toml"'
+
+# remove a files
+rm = "zk list --interactive --quiet --format path --delimiter0 $@ | xargs -0 rm -vf --"

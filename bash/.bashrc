@@ -129,4 +129,5 @@ fi
 export BROWSER=firefox-esr
 export DOTNET_ROOT=$HOME/.dotnet
 export ZK_NOTEBOOK_DIR=$HOME/notebook
+export EDITOR=nvim
 PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
