@@ -66,3 +66,42 @@ godot() {
     echo "No Godot versions found in $HOME/.software"
   fi
 }
+
+# Open tmux window with zk recent
+tzk() {
+    if [[ -z $TMUX ]]; then
+        echo "Not in a tmux session!"
+        return 1
+    fi
+    local session
+    session=$(tmux list-sessions -F "#{session_name}" -f "#{session_attached}")
+    tmux new-window -n "zk" -c "$ZK_NOTEBOOK_DIR"
+    tmux split-window -v -p 80
+    tmux swap-pane -t 1 -U
+    tmux clock-mode -t 0
+    tmux send-keys -t 1 "zk recent" Enter
+    tmux select-window -t "$session:zk"
+    tmux select-pane -t 1
+}
+
+# Fuzzy select from common directories
+ccd() {
+    if [ -n "$COMMON_DIRS" ]; then
+        selected=$(echo $COMMON_DIRS | sed "s/,/\n/g" | fzf)
+        cd "$selected"
+    else
+        echo "COMMON_DIRS env not set."
+    fi
+}
+
+# tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
+# `tm` will allow you to select your tmux session via fzf.
+# `tm irc` will attach to the irc session (if it exists), else it will create it.
+
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}

@@ -3,7 +3,7 @@
 # Uncomment the properties you want to customize.
 # NOTEBOOK SETTINGS
 [notebook]
-dir = "~/notebook"
+dir = "~/Ux000"
 
 # NOTE SETTINGS
 #
@@ -28,10 +28,11 @@ extension = "md"
 template = "default.md"
 
 # Path globs ignored while indexing existing notes.
-#ignore = [
-#    "drafts/*",
-#	"log.md"
-#]
+ignore = [
+    #"drafts/*",
+    #"log.md"
+    ".obsidian"
+]
 
 # Configure random ID generation.
 

@@ -126,8 +126,19 @@ if [ -d "$HOME/.local/scripts" ] ; then
     PATH="$HOME/.local/scripts:$PATH"
 fi
 
+# Set up fzf key bindings and fuzzy completion
+[ -x $(which fzf) ] && eval "$(fzf --bash)"
+
 export BROWSER=firefox-esr
 export DOTNET_ROOT=$HOME/.dotnet
-export ZK_NOTEBOOK_DIR=$HOME/notebook
+export ZK_NOTEBOOK_DIR=$HOME/Ux000
 export EDITOR=nvim
+export COMMON_DIRS="$HOME,$HOME/.config,$HOME/.config/nvim,$HOME/.dotfiles"
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --color=fg:#d0d0d0,fg+:#d0d0d0,bg:#121212,bg+:#262626
+  --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
+  --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
+  --color=border:#262626,label:#aeaeae,query:#d9d9d9
+  --border="bold" --border-label="" --preview-window="border-bold" --prompt="> "
+  --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
 PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
