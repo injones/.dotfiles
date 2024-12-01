@@ -92,6 +92,7 @@ fi
 #alias la='ls -A'
 #alias l='ls -CF'
 alias vim='nvim'
+alias bgj='background_job'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -142,3 +143,15 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --border="bold" --border-label="" --preview-window="border-bold" --prompt="> "
   --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
 PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
+# not sure this is a good idea :D
+# if not already in tmux session start a new session or show existing sessions
+if [[ -z "$TMUX" ]] ; then
+    if [[ -n $(pgrep tmux) ]] ; then
+        if [ !$(tm) ] ; then
+            tm main
+        fi
+    else
+        tm main
+    fi
+fi

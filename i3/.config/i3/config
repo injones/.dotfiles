@@ -39,6 +39,9 @@ bindsym $win+l exec "i3lock -c 000000"
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+# Disables Energy Star features + Disables screen saver
+exec --no-startup-id xset -dpms; xset s off
+
 # Configure monitor
 exec_always "~/.local/scripts/monitor_setup.sh"
 
@@ -75,7 +78,7 @@ bindsym $mod+Shift+q kill
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # fzf dmenu
-bindsym $mod+d exec --no-startup-id alacritty -T 'fzf-menu' -e bash -i -c 'i3-dmenu-desktop --dmenu=fzf'
+bindsym $mod+d exec --no-startup-id "~/.local/scripts/fzf_menu.sh"
 for_window [title="fzf-menu"] floating enable
 for_window [title="fzf-menu"] border pixel 0
 
@@ -125,6 +128,9 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+
+# split vertical + tab layout
+bindsym $mod+Shift+v split v ; layout tabbed
 
 # focus the child container
 #bindsym $mod+d focus child
