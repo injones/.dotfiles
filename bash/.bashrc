@@ -93,6 +93,7 @@ fi
 #alias l='ls -CF'
 alias vim='nvim'
 alias bgj='background_job'
+alias vag='vagrant'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -134,7 +135,7 @@ export BROWSER=firefox-esr
 export DOTNET_ROOT=$HOME/.dotnet
 export ZK_NOTEBOOK_DIR=$HOME/Ux000
 export EDITOR=nvim
-export COMMON_DIRS="$HOME,$HOME/.config,$HOME/.config/nvim,$HOME/.dotfiles"
+export COMMON_DIRS="$HOME,$HOME/.config,$HOME/.config/nvim,$HOME/.dotfiles,$HOME/Books,$HOME/Downloads"
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --color=fg:#d0d0d0,fg+:#d0d0d0,bg:#121212,bg+:#262626
   --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00

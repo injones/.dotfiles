@@ -59,7 +59,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+#floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
@@ -81,6 +81,10 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id "~/.local/scripts/fzf_menu.sh"
 for_window [title="fzf-menu"] floating enable
 for_window [title="fzf-menu"] border pixel 0
+
+bindsym $win+b exec alacritty --class zathura-menu -e ~/.local/scripts/zathura_menu.sh
+for_window [class="zathura-menu"] floating enable
+for_window [class="zathura-menu"] border pixel 0
 
 # change focus
 bindsym $mod+h focus left
@@ -214,6 +218,7 @@ bindsym $mod+r mode "resize"
 
 # using blender (use alt)
 mode "blender" {
+    bindsym button1 nop
     bindsym Mod4+f fullscreen toggle
     bindsym Mod4+b mode "default"
 
@@ -240,6 +245,9 @@ bindsym $mod+b mode "blender"
 
 # Bluetooth Manager
 bindsym $mod+Shift+b exec blueman-manager
+
+# PulseAudio
+bindsym $mod+Shift+a exec pavucontrol
 
 # open firefox profile select
 bindsym $mod+p exec firefox-esr -P

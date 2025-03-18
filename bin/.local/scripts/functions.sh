@@ -113,3 +113,7 @@ background_job() {
 rmf() {
     ls | fzf -m | xargs -I {} rm {}
 }
+
+zathls() {
+    cd $HOME/Books ; find *.pdf -type f | fzf --bind 'enter:become(nohup zathura {} > /dev/null 2>&1 &)'
+}

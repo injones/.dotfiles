@@ -1,6 +1,6 @@
 #!/bin/bash
 if xrandr --listmonitors | grep "2:" ; then
-	source /home/happyduck/.screenlayout/three.sh
+	source /home/happyduck/.screenlayout/three-left.sh
 elif xrandr --listmonitors | grep "1:" ; then
 	source /home/happyduck/.screenlayout/two.sh
 else

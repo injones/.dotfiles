@@ -1,0 +1,27 @@
+services:
+  windows:
+    image: dockurr/windows
+    container_name: windows
+    environment:
+      VERSION: "11"
+      DISK_FMT: "qcow2"
+      DISK_SIZE: "256G"
+      RAM_SIZE: "8G"
+      CPU_CORES: "4"
+      USERNAME: "bender"
+      PASSWORD: "bender"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    volumes:
+      - $HOME/.dotfiles/Docker/windows:/oem
+      - $HOME/win:/storage
+    stop_grace_period: 2m
+    userns_mode: "host"
+    privileged: true
