@@ -21,6 +21,11 @@ checksum() {
 }
 
 install_go() {
+    echo "
+        --------------------------------------
+        ---------------- GO ------------------
+        --------------------------------------
+    "
     go_tar=/tmp/go.tar.gz
     go_dest=/usr/local
     if [ -d "$go_dest/go" ]; then
@@ -31,6 +36,11 @@ install_go() {
 }
 
 install_node() {
+    echo "
+        ----------------------------------------
+        ---------------- NODE ------------------
+        ----------------------------------------
+    "
     # nvm
     if [ ! -d "$HOME/.nvm" ]; then
         NVM_VERSION=0.40.2
@@ -43,6 +53,11 @@ install_node() {
 }
 
 install_fzf() {
+    echo "
+        ---------------------------------------
+        ---------------- FZF ------------------
+        ---------------------------------------
+    "
     FZF_TAR=/tmp/fzf.tar.gz
     FZF_DEST=/usr/bin
     FZF_VERSION=0.60.3
@@ -51,6 +66,11 @@ install_fzf() {
 }
 
 install_ripgrep() {
+    echo "
+        ---------------------------------------
+        ---------------- RG -------------------
+        ---------------------------------------
+    "
     rg_deb=/tmp/rg.deb
     RG_VERSION=14.1.0
     download_file "https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep_$RG_VERSION-1_amd64.deb" $rg_deb
@@ -58,12 +78,22 @@ install_ripgrep() {
 }
 
 install_fd() {
+    echo "
+        ---------------------------------------
+        ---------------- FD -------------------
+        ---------------------------------------
+    "
     fd_deb=/tmp/fd.deb
     download_file https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-musl_10.2.0_amd64.deb $fd_deb
     sudo dpkg -i $fd_deb
 }
 
 install_yazi() {
+    echo "
+        -----------------------------------------
+        ---------------- YAZI -------------------
+        -----------------------------------------
+    "
     YAZI_ZIP=/tmp/yazi.zip
     YAZI_DIR=/tmp/yazi
     YAZI_DEST="$HOME/.local/bin"
@@ -73,12 +103,34 @@ install_yazi() {
 }
 
 install_dotnet() {
+    echo "
+        -----------------------------------------
+        ---------------- .NET -------------------
+        -----------------------------------------
+    "
     wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
 
     sudo apt-get update &&
         sudo apt-get install -y dotnet-sdk-9.0 aspnetcore-runtime-9.0
+}
+
+install_nvim() {
+    echo "
+        -----------------------------------------
+        ---------------- NVIM -------------------
+        -----------------------------------------
+    "
+    NVIM_VERSION=0.10.4
+    NVIM_DEST=/opt/nvim-linux64
+    NVIM_TMP_DEST=/tmp/nvim.tar.gz
+    download_file "https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/nvim-linux-x86_64.tar.gz" $NVIM_TMP_DEST
+    sudo rm -rf $NVIM_DEST
+    sudo mkdir -p $NVIM_DEST
+    sudo chmod a+rX $NVIM_DEST
+    sudo tar -C /opt -xzf $NVIM_TMP_DEST
+    sudo ln -sf $NVIM_DEST/bin/nvim /usr/local/bin/
 }
 
 # .local/bin
@@ -91,11 +143,18 @@ sudo apt-get upgrade -y
 
 # apt packages
 sudo apt install -y \
+    unzip \
+    build-essential \
+    xsel \
+    stow \
+    tmux \
+    curl \
     p7zip \
     jq \
     xclip \
     imagemagick \
-    poppler-utils
+    poppler-utils \
+    wget
 
 # node
 [ ! $(command -v node) ] && install_node
@@ -123,3 +182,6 @@ sudo apt install -y \
 
 # az
 [ ! $(command -v az) ] && curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# nvim
+[ ! $(command -v nvim) ] && install_nvim

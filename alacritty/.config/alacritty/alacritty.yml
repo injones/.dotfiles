@@ -25,25 +25,28 @@ font:
 # Colors (Nord)
 colors:
   primary:
-    background: '#242831'
-    foreground: '#d8dee9'
+    background: '#1a1b26'
+    foreground: '#c0caf5'
   normal:
-    black:   '#3b4252'
-    red:     '#bf616a'
-    green:   '#a3be8c'
-    yellow:  '#ebcb8b'
-    blue:    '#81a1c1'
-    magenta: '#b48ead'
-    cyan:    '#88c0d0'
-    white:   '#e5e9f0'
+    black: '#15161e'
+    red: '#f7768e'
+    green: '#9ece6a'
+    yellow: '#e0af68'
+    blue: '#7aa2f7'
+    magenta: '#bb9af7'
+    cyan: '#7dcfff'
+    white: '#a9b1d6'
   bright:
-    black:   '#4c566a'
-    red:     '#bf616a'
-    green:   '#a3be8c'
-    yellow:  '#ebcb8b'
-    blue:    '#81a1c1'
-    magenta: '#b48ead'
-    cyan:    '#8fbcbb'
-    white:   '#eceff4'
+    black: '#414868'
+    red: '#ff899d'
+    green: '#9fe044'
+    yellow: '#faba4a'
+    blue: '#8db0ff'
+    magenta: '#c7a9ff'
+    cyan: '#a4daff'
+    white: '#c0caf5'
 
 live_config_reload: true
+
+env:
+  TERM: xterm-256color
