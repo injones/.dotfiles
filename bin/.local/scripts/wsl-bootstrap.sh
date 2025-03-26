@@ -149,12 +149,13 @@ sudo apt install -y \
     stow \
     tmux \
     curl \
-    p7zip \
+    p7zip-full \
     jq \
     xclip \
     imagemagick \
     poppler-utils \
-    wget
+    wget \
+    file
 
 # node
 [ ! $(command -v node) ] && install_node

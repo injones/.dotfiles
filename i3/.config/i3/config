@@ -273,10 +273,10 @@ bar {
 # Colors
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #5E81AC #5E81AC #ECEFF4 #2e9ef4   #5E81AC
-client.focused_inactive #3B4252 #2E3440 #ECEFF4 #484e50   #3B4252
-client.unfocused        #2E3440 #2E3440 #ECEFF4 #292d2e   #2E3440
-client.urgent           #BF616A #BF616A #ECEFF4 #BF616A   #BF616A
-client.placeholder      #000000 #0c0c0c #ECEFF4 #000000   #0c0c0c
+client.focused           #9aa5ce #364A82 #c0caf5 #9aa5ce   #9aa5ce
+client.focused_inactive  #16161d #16161d #c0caf5 #16161d   #16161d
+client.unfocused         #16161d #16161d #c0caf5 #16161d   #16161d
+client.urgent            #BF616A #BF616A #ECEFF4 #BF616A   #BF616A
+client.placeholder       #000000 #0c0c0c #ECEFF4 #000000   #0c0c0c
 
 client.background       #ECEFF4

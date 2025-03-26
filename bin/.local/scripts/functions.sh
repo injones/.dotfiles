@@ -165,3 +165,9 @@ tzdev() {
     tmux select-window -t "dev"
     tmux select-pane -t 2
 }
+
+gitcd() {
+    local GIT_DIR=$HOME/git
+    local DIR=$(ls "$GIT_DIR" | fzf)
+    cd "$GIT_DIR/$DIR"
+}
