@@ -161,7 +161,7 @@ tzdev() {
     tmux split-window -v -t 0 -p 40
     tmux send-key -t 0 "btop" Enter
     tmux send-key -t 1 "cd $HOME/git ; clear" Enter
-    tmux send-key -t 2 "ccd" Enter
+    tmux send-key -t 2 "yazi $HOME/git" Enter
     tmux select-window -t "dev"
     tmux select-pane -t 2
 }
@@ -170,4 +170,9 @@ gitcd() {
     local GIT_DIR=$HOME/git
     local DIR=$(ls "$GIT_DIR" | fzf)
     cd "$GIT_DIR/$DIR"
+}
+
+grr() {
+    local DISK=$(lsblk --output NAME,SIZE,TYPE,MOUNTPOINTS -J | jq -r '.blockdevices[] | select(.children != null) | .children[] | select(.mountpoints[] | length < 1) | .name + " : " + .size' | fzf --print0 | cut -d ":" -f 1 | xargs)
+    udisksctl mount -b /dev/$DISK
 }
