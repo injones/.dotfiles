@@ -1,8 +1,14 @@
 {
+    "editor.lineNumbers": "relative",
     "zenMode.centerLayout": false, 
     "zenMode.hideLineNumbers": false,
+    "zenMode.showTabs": "single",
+    "zenMode.fullScreen": false,
+    "diffEditor.ignoreTrimWhitespace": false,
     "editor.fontFamily": "JetBrainsMono Nerd Font, 'Droid Sans Mono', 'monospace', monospace",
     "editor.fontLigatures": true,
+    "editor.fontSize": 16,
+    "workbench.colorTheme": "Tokyo Night",
     "vim.leader": "<space>",
     "vim.normalModeKeyBindings": [
     {
@@ -43,11 +49,15 @@
     },
     {
       "before": ["<leader>", ","],
+      "commands": ["workbench.action.showAllEditorsByMostRecentlyUsed"]
+    },
+    {
+      "before": ["<leader>", "s", "f"],
       "commands": ["workbench.action.quickOpen"]
     },
     {
-      "before": ["s", "g"],
-      "commands": ["filesExplorer.findInFolder"]
+      "before": ["<leader>", "s", "g"],
+      "commands": ["workbench.action.showAllSymbols"]
     },
     {
       "before": ["<leader>", "e"],
@@ -55,7 +65,7 @@
     },
     {
       "before": ["<leader>", "g", "s"],
-      "commands": ["workbench.scm.focus"]
+      "commands": ["workbench.view.scm"]
     },
     {
       "before": ["[", "d"],
@@ -74,44 +84,107 @@
       "commands": ["editor.action.quickFix"]
     },
     {
-      "before": ["<leader>", "h", "S"],
+      "before": ["<leader>", "h", "s"],
       "commands": ["git.stage"]
+      // "commands": ["git.stageSelectedRanges"]
     },
+    
     {
       "before": ["<leader>", "h", "R"],
       "commands": ["git.revertChange"]
     },
     {
       "before": ["<leader>", "h", "b"],
-      "commands": ["git.blame.toggleEditorDecoration"]
+      "commands": ["gitlens.toggleFileBlameInDiffLeft"]
     },
     {
       "before": ["<leader>", "h", "d"],
       "commands": ["git.timeline.openDiff"]
     },
     {
-      "before": ["c", "c"],
-      "commands": ["workbench.scm.focusInput"]
+      "before": ["<leader>", "h", "p"],
+      "commands": ["editor.action.dirtydiff.next"]
+      // "commands": ["gitlens.diffLineWithPrevious"]
     },
+    {
+      "before": ["<leader>", "t"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<leader>", "H"],
+      "commands": ["vscode-harpoon.addEditor"]
+    },
+    {
+      "before": ["<leader>", "h", "e"],
+      "commands": ["vscode-harpoon.editEditors"]
+    },
+    {
+      "before": ["<leader>", "h", "h"],
+      "commands": ["vscode-harpoon.editorQuickPick"]
+    },
+    {
+      "before": ["<leader>", "1"],
+      "commands": ["vscode-harpoon.gotoEditor1"]
+    },
+    {
+      "before": ["<leader>", "2"],
+      "commands": ["vscode-harpoon.gotoEditor2"]
+    },
+    {
+      "before": ["<leader>", "3"],
+      "commands": ["vscode-harpoon.gotoEditor3"]
+    },
+    {
+      "before": ["<leader>", "4"],
+      "commands": ["vscode-harpoon.gotoEditor4"]
+    },
+    {
+      "before": ["<C-h>"], // Focus split window at left
+      "commands": ["workbench.action.focusLeftGroup"]
+    },
+    {
+      "before": ["<C-j>"], // Focus split window at right
+      "commands": ["workbench.action.focusBelowGroup"]
+    },
+    {
+      "before": ["<C-k>"], // Focus split window at above
+      "commands": ["workbench.action.focusAboveGroup"]
+    },
+    {
+      "before": ["<C-l>"], // Focus split window at below
+      "commands": ["workbench.action.focusRightGroup"]
+    },
+    {
+      "before": ["]", "c"], // Jump to next Git change
+      "commands": ["workbench.action.editor.nextChange"]
+    },
+    {
+      "before": ["[", "c"], // Jump to previous Git change
+      "commands": ["workbench.action.editor.previousChange"]
+    }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-        "before": ["<C-d>"],
-        "after": ["<C-d>", "z", "z"]
+      "before": ["<C-d>"],
+      "after": ["<C-d>", "z", "z"]
     },
     {
-        "before": ["<C-u>"],
-        "after": ["<C-u>", "z", "z"]
+      "before": ["<C-u>"],
+      "after": ["<C-u>", "z", "z"]
+    },
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "after": ["git.unstageSelectedRanges"]
+    },
+    {
+      "before": ["r"],
+      "command": ["git.revertSelectedRanges"]
+    },
+    {
+      "before": ["s"],
+      "commands": ["git.stageSelectedRanges"]
     }
   ],
-  "vim.visualModeKeyBindings": [
-    {
-        "before": ["<leader>", "h", "s"],
-        "command": ["git.stageSelectedRanges"]
-    },
-    {
-        "before": ["<leader>", "h", "r"],
-        "command": ["git.revertSelectedRanges"]
-    }
-  ]
 }

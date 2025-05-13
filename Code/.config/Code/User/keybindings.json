@@ -610,17 +610,32 @@
     },
     {
         "key": "czz",
-        "when": "scmViewletVisible",
+        "when": "sideBarFocus",
         "command": "git.stashIncludeUntracked"
     },
     {
-        "key": "cc",
-        "when": "scmViewletVisible",
-        "command": "workbench.scm.focusInput"
+        "key": "c c",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.scm' && !inputFocus",
+        "command": "workbench.scm.action.focusPreviousInput"
     },
     {
-        "key": "shift+; w",
-        "command": "git.commit",
-        "when": "scmInputFocus"
+        "key": "escape",
+        "command": "list.focusDown",
+        "when": "inputFocus && !editorTextFocus"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "list.focusDown",
+        "when": "sideBarFocus"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "list.focusUp",
+        "when": "sideBarFocus"
+    },
+    {
+        "key": "escape",
+        "command": "workbench.action.closePanel",
+        "when": "panelFocus"
     }
 ]
