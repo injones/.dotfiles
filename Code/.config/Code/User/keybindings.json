@@ -516,6 +516,17 @@
     { 
         "key": "\\", 
         "command": "runCommands", 
+        "when": "!resourcesScheme && !panelFocus", 
+        "args": {
+            "commands": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.files.action.focusFileExplorer"
+            ]
+        }
+    },
+    { 
+        "key": "\\", 
+        "command": "runCommands", 
         "when": "sideBarFocus", 
         "args": {
             "commands": [
@@ -581,9 +592,15 @@
         "when": "inQuickOpen"
     },
     {
+        "key": "ctrl+y",
+        "command": "workbench.action.acceptSelectedQuickOpenItem",
+        "when": "inQuickOpen"
+    },
+
+    {
         "key": "space e",
         "command": "workbench.actions.view.problems",
-        "when": "problemFocus"
+        "when": "activePanel == 'workbench.panel.markers' && focusedView == 'workbench.panel.markers.view'"
     },
     {
         "key": "ctrl+d",
@@ -609,13 +626,13 @@
         "command": "workbench.action.navigateBack"
     },
     {
-        "key": "czz",
-        "when": "sideBarFocus",
+        "key": "c z z",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.scm' && !inputFocus && listHasSelectionOrFocus",
         "command": "git.stashIncludeUntracked"
     },
     {
         "key": "c c",
-        "when": "sideBarFocus && activeViewlet == 'workbench.view.scm' && !inputFocus",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.scm' && !inputFocus && listHasSelectionOrFocus",
         "command": "workbench.scm.action.focusPreviousInput"
     },
     {
@@ -637,5 +654,20 @@
         "key": "escape",
         "command": "workbench.action.closePanel",
         "when": "panelFocus"
+    },
+    {
+        "key": "escape",
+        "command": "list.focusDown",
+        "when": "searchInputBoxFocus && activeViewlet == 'workbench.view.search'"
+    },
+    {
+        "key": "shift+/",
+        "command": "search.action.focusSearchFromResults",
+        "when": "!searchInputBoxFocus && !editorTextFocus && activeViewlet == 'workbench.view.search'"
+    },
+    {
+        "key": "shift+q",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.visible && !editorTextFocus"
     }
 ]

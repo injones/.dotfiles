@@ -1,5 +1,6 @@
 {
     "editor.lineNumbers": "relative",
+    "editor.wordWrap": "on",
     "zenMode.centerLayout": false, 
     "zenMode.hideLineNumbers": false,
     "zenMode.showTabs": "single",
@@ -37,7 +38,7 @@
     },
     {
       "before": ["g", "d"],
-      "commands": ["editor.action.goToTypeDefinition"]
+      "commands": ["editor.action.revealDefinition"]
     },
     {
       "before": ["g", "p", "t"],
@@ -57,7 +58,7 @@
     },
     {
       "before": ["<leader>", "s", "g"],
-      "commands": ["workbench.action.showAllSymbols"]
+      "commands": ["workbench.action.findInFiles"]
     },
     {
       "before": ["<leader>", "e"],
@@ -111,6 +112,10 @@
       "commands": ["workbench.action.closeActiveEditor"]
     },
     {
+      "before": ["<leader>", "T"],
+      "commands": ["workbench.action.closeAllEditors"]
+    },
+    {
       "before": ["<leader>", "H"],
       "commands": ["vscode-harpoon.addEditor"]
     },
@@ -161,6 +166,14 @@
     {
       "before": ["[", "c"], // Jump to previous Git change
       "commands": ["workbench.action.editor.previousChange"]
+    },
+    {
+      "before": ["<leader>", "o"],
+      "commands": ["workbench.action.output.toggleOutput"]
+    },
+    {
+      "before": ["<leader>", "t", "t"],
+      "commands": ["workbench.action.terminal.focus"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
