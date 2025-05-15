@@ -516,7 +516,7 @@
     { 
         "key": "\\", 
         "command": "runCommands", 
-        "when": "!resourcesScheme && !panelFocus", 
+        "when": "!resourceFilename && !panelFocus", 
         "args": {
             "commands": [
                 "workbench.action.toggleSidebarVisibility",
@@ -669,5 +669,40 @@
         "key": "shift+q",
         "command": "workbench.action.terminal.toggleTerminal",
         "when": "terminal.visible && !editorTextFocus"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "list.focusDown",
+        "when": "!editorTextFocus && inputBoxFocus && activeViewlet == 'workbench.view.extension.test'"
+    },
+    {
+        "key": "escape",
+        "command": "closeQuickDiff",
+        "when": "dirtyDiffVisible"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "-editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    { // will break switching split editors if the sidebar is open / the sidebar isn't to the left
+        "key": "ctrl+h",
+        "command": "workbench.action.focusSideBar",
+        "when": "sideBarVisible && editorFocus"
+    },
+    {
+        "key": "shift+9",
+        "command": "diffEditor.toggleCollapseUnchangedRegions",
+        "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "shift+-",
+        "command": "workbench.action.compareEditor.previousChange",
+        "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "shift+=",
+        "command": "workbench.action.compareEditor.nextChange",
+        "when": "textCompareEditorVisible"
     }
 ]

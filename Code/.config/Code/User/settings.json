@@ -34,7 +34,8 @@
     },
     {
       "before": ["g", "r"],
-      "commands": ["editor.action.referenceSearch.trigger"]
+      // "commands": ["editor.action.referenceSearch.trigger"],
+      "commands": ["references-view.findReferences"]
     },
     {
       "before": ["g", "d"],
@@ -69,11 +70,11 @@
       "commands": ["workbench.view.scm"]
     },
     {
-      "before": ["[", "d"],
+      "before": ["]", "d"],
       "commands": ["editor.action.marker.next"]
     },
     {
-      "before": ["]", "d"],
+      "before": ["[", "d"],
       "commands": ["editor.action.marker.prev"]
     },
     {
@@ -100,7 +101,7 @@
     },
     {
       "before": ["<leader>", "h", "d"],
-      "commands": ["git.timeline.openDiff"]
+      "commands": ["gitlens.diffLineWithPrevious"]
     },
     {
       "before": ["<leader>", "h", "p"],
@@ -174,6 +175,14 @@
     {
       "before": ["<leader>", "t", "t"],
       "commands": ["workbench.action.terminal.focus"]
+    },
+    {
+      "before": ["<leader>", "t", "e"],
+      "commands": ["dotnet-test-explorer.showExplorer"]
+    },
+    {
+      "before": ["<leader>", "n", "f"],
+      "commands": ["workbench.action.files.saveWithoutFormatting"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -200,4 +209,5 @@
       "commands": ["git.stageSelectedRanges"]
     }
   ],
+  "diffEditor.hideUnchangedRegions.enabled": true,
 }
