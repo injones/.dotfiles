@@ -109,11 +109,11 @@
       // "commands": ["gitlens.diffLineWithPrevious"]
     },
     {
-      "before": ["<leader>", "t"],
+      "before": ["<leader>", "T"],
       "commands": ["workbench.action.closeActiveEditor"]
     },
     {
-      "before": ["<leader>", "T"],
+      "before": ["<leader>", "t", "T"],
       "commands": ["workbench.action.closeAllEditors"]
     },
     {

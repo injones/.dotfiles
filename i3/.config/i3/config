@@ -15,7 +15,7 @@ set $win Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 11
-font pango:JetBrains Mono 11
+font pango:JetBrainsMono Nerd Font 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -47,6 +47,9 @@ exec_always "~/.local/scripts/monitor_setup.sh"
 
 # feh bg
 #exec_always feh --bg-center /usr/share/backgrounds/earth-in-space.png
+
+# polybar
+exec_always --no-startup-id "~/.config/polybar/launch_polybar.sh"
 
 # shutdown
 bindsym $mod+Shift+End exec systemctl poweroff
@@ -85,6 +88,10 @@ for_window [title="fzf-menu"] border pixel 0
 bindsym $win+b exec alacritty --class zathura-menu -e ~/.local/scripts/zathura_menu.sh
 for_window [class="zathura-menu"] floating enable
 for_window [class="zathura-menu"] border pixel 0
+
+bindsym $win+x exec alacritty --class xournalpp-menu -e ~/.local/scripts/zathura_xournalpp.sh
+for_window [class="xournalpp-menu"] floating enable
+for_window [class="xournalpp-menu"] border pixel 0
 
 # change focus
 bindsym $mod+h focus left
@@ -265,17 +272,17 @@ for_window [class="solanum"] floating enable
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    status_command i3status
-	tray_output primary
-}
+# bar {
+#     status_command i3status
+# 	tray_output primary
+# }
 
 # Colors
 
-# class                 border  backgr. text    indicator child_border
-client.focused           #9aa5ce #364A82 #c0caf5 #9aa5ce   #9aa5ce
-client.focused_inactive  #16161d #16161d #c0caf5 #16161d   #16161d
-client.unfocused         #16161d #16161d #c0caf5 #16161d   #16161d
+# class                  border  backgr. text    indicator child_border
+client.focused           #7aa2f7 #7aa2f7 #16161e #9aa5ce   #7aa2f7
+client.focused_inactive  #414868 #414868 #c0caf5 #16161d   #414868
+client.unfocused         #414868 #414868 #c0caf5 #16161d   #414868
 client.urgent            #BF616A #BF616A #ECEFF4 #BF616A   #BF616A
 client.placeholder       #000000 #0c0c0c #ECEFF4 #000000   #0c0c0c
 

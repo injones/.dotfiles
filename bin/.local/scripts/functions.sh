@@ -156,14 +156,16 @@ tzdev() {
         return 1
     fi
     local SESSION=$(tmux list-sessions -F "#{session_name}" -f "#{session_attached}")
-    tmux new-window -n "dev" -c "$HOME"
+    # tmux new-window -n "dev" -c "$HOME"
+    tmux rename-window -t 1 "dev"
     tmux split-window -t 0 -h -p 55
     tmux split-window -v -t 0 -p 40
     tmux send-key -t 0 "btop" Enter
     tmux send-key -t 1 "cd $HOME/git ; clear" Enter
-    tmux send-key -t 2 "yazi $HOME/git" Enter
-    tmux select-window -t "dev"
+    tmux send-key -t 2 "ccd" Enter
+    # tmux select-window -t "dev"
     tmux select-pane -t 2
+    # tmux kill-window -t 1
 }
 
 gitcd() {

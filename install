@@ -1,10 +1,8 @@
 #!/usr/bin/sh
 
-Installs="alacritty,bin,bash,glow,i3,tmux,nvim,X,zathura,zk,yazi,bat"
+Installs="alacritty,bin,bash,glow,i3,tmux,nvim,X,zathura,zk,yazi,bat,Code"
 
-for folder in $(echo $Installs | sed "s/,/ /g")
-do
+for folder in $(echo $Installs | sed "s/,/ /g"); do
     echo "stow $folder"
     stow -D $folder -S $folder
 done
-

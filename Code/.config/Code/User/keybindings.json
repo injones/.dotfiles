@@ -516,7 +516,7 @@
     { 
         "key": "\\", 
         "command": "runCommands", 
-        "when": "!resourceFilename && !panelFocus", 
+        "when": "!resourceFilename && !activeEditor && !panelFocus", 
         "args": {
             "commands": [
                 "workbench.action.toggleSidebarVisibility",
