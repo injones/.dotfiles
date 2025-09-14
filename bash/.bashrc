@@ -129,9 +129,9 @@ if [ -d "$HOME/.local/scripts" ] ; then
 fi
 
 # Set up fzf key bindings and fuzzy completion
-[ -x $(which fzf) ] && eval "$(fzf --bash)"
+command -v fzf >/dev/null && eval "$(fzf --bash)"
 # Set up zoxide
-[ -x $(which zoxide) ] && eval "$(zoxide init bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 
 export BROWSER=firefox-esr
 export DOTNET_ROOT=$HOME/.dotnet
@@ -145,7 +145,8 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --color=border:#262626,label:#aeaeae,query:#d9d9d9
   --border="bold" --border-label="" --preview-window="border-bold" --prompt="> "
   --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
-PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+export GO_ROOT=/usr/local/go
+PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$GO_ROOT/bin
 
 # not sure this is a good idea :D
 # if not already in tmux session start a new session or show existing sessions
@@ -158,7 +159,8 @@ if [[ -z "$TMUX" ]] ; then
         tm main
     fi
 fi
-. "$HOME/.cargo/env"
+
+[ -d "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

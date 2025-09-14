@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Simple bootstrap script for Debian WSL / lightweight installs
 
@@ -20,6 +20,17 @@ checksum() {
     return 1
 }
 
+contains_ignore_case() {
+    local value="${1,,}"  # bash lowercase ????
+    shift
+    for element in "$@"; do
+        if [[ "${element,,}" == "$value" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
 install_go() {
     echo "
         --------------------------------------
@@ -29,7 +40,7 @@ install_go() {
     go_tar=/tmp/go.tar.gz
     go_dest=/usr/local
     if [ -d "$go_dest/go" ]; then
-        rm -rf "$go_dest/go"
+        sudo rm -rf "$go_dest/go"
     fi
     download_file https://go.dev/dl/go1.24.1.linux-amd64.tar.gz $go_tar
     sudo tar -C $go_dest -xzvf $go_tar
@@ -122,8 +133,8 @@ install_nvim() {
         ---------------- NVIM -------------------
         -----------------------------------------
     "
-    NVIM_VERSION=0.10.4
-    NVIM_DEST=/opt/nvim-linux64
+    NVIM_VERSION=0.11.4
+    NVIM_DEST=/opt/nvim-linux-x86_64
     NVIM_TMP_DEST=/tmp/nvim.tar.gz
     download_file "https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/nvim-linux-x86_64.tar.gz" $NVIM_TMP_DEST
     sudo rm -rf $NVIM_DEST
@@ -133,9 +144,50 @@ install_nvim() {
     sudo ln -sf $NVIM_DEST/bin/nvim /usr/local/bin/
 }
 
+install_zk() {
+    echo "
+        -----------------------------------------
+        ---------------- ZK ---------------------
+        -----------------------------------------
+    "
+    ZK_VERSION=0.15.1
+    ZK_TMP=/tmp/zk.tar.gz
+    ZK_BIN=/usr/local/bin/zk
+    download_file "https://github.com/zk-org/zk/releases/download/v0.15.1/zk-v0.15.1-linux-amd64.tar.gz" $ZK_TMP
+    sudo rm -rf $ZK_BIN
+    sudo tar -C /usr/local/bin -xvf $ZK_TMP
+}
+
+install_docker() {
+    echo "
+        ---------------------------------------------
+        ---------------- Docker ---------------------
+        ---------------------------------------------
+    "
+    # Add Docker's official GPG key:
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+}
+
 # .local/bin
 if [ ! -d "$HOME/.local/bin" ]; then
     mkdir -p $HOME/.local/bin
+fi
+
+# .local/scripts
+if [ ! -d "$HOME/.local/scripts" ]; then
+    mkdir -p $HOME/.local/scripts
 fi
 
 sudo apt-get update
@@ -155,34 +207,82 @@ sudo apt install -y \
     imagemagick \
     poppler-utils \
     wget \
-    file
+    file \
+    git \
+    man-db
+
+SELECTED_ARG=$1
+FORCE_ARG=$2
+declare -a SELECTED=("nvm" "go" "zoxide" "fd" "rg" "fzf" "yazi" "dotnet" "az" "nvim" "zk" "docker")
+FORCE=1
+
+if [ -n "$SELECTED_ARG" ]; then
+    IFS=',' read -r -a SELECTED <<< "$SELECTED_ARG"
+fi
+
+if [[ -n "$FORCE_ARG" ]] && contains_ignore_case "$FORCE_ARG" "yes" "y" "true" "1"; then
+    FORCE=0
+fi
+
+echo "Installing:"
+printf "%s\n" "${SELECTED[@]}"
 
 # node
-[ ! $(command -v node) ] && install_node
+if contains_ignore_case "nvm" "${SELECTED[@]}" && { ! command -v node >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_node
+fi
 
 # go
-[ ! $(command -v go) ] && install_go
+if contains_ignore_case "go" "${SELECTED[@]}" && { ! command -v go >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_go
+fi
 
 # zoxide
-[ ! $(command -v zoxide) ] && curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+if contains_ignore_case "zoxide" "${SELECTED[@]}" && { ! command -v zoxide >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+fi
 
 # fd
-[ ! $(command -v fd) ] && install_fd
+if contains_ignore_case "fd" "${SELECTED[@]}" && { ! command -v fd >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_fd
+fi
 
 # ripgrep
-[ ! $(command -v rg) ] && install_ripgrep
+if contains_ignore_case "rg" "${SELECTED[@]}" && { ! command -v rg >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_ripgrep
+fi
 
 # fzf
-[ ! $(command -v fzf) ] && install_fzf
+if contains_ignore_case "fzf" "${SELECTED[@]}" && { ! command -v fzf >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_fzf
+fi
 
 # yazi
-[ ! $(command -v yazi) ] && install_yazi
+if contains_ignore_case "yazi" "${SELECTED[@]}" && { ! command -v yazi >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_yazi
+fi
 
 # dotnet
-[ ! $(command -v dotnet) ] && install_dotnet
+if contains_ignore_case "dotnet" "${SELECTED[@]}" && { ! command -v dotnet >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_dotnet
+fi
 
 # az
-[ ! $(command -v az) ] && curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+if contains_ignore_case "az" "${SELECTED[@]}" && { ! command -v az >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+fi
 
 # nvim
-[ ! $(command -v nvim) ] && install_nvim
+if contains_ignore_case "nvim" "${SELECTED[@]}" && { ! command -v nvim >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_nvim
+fi  
+
+# zk
+if contains_ignore_case "zk" "${SELECTED[@]}" && { ! command -v zk >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_zk
+fi
+
+# docker
+if contains_ignore_case "docker" "${SELECTED[@]}" && { ! command -v docker >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_docker
+fi
