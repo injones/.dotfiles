@@ -132,6 +132,8 @@ fi
 command -v fzf >/dev/null && eval "$(fzf --bash)"
 # Set up zoxide
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
+# Set up starship
+command -v starship >/dev/null && eval "$(starship init bash)"
 
 export BROWSER=firefox-esr
 export DOTNET_ROOT=$HOME/.dotnet
@@ -147,18 +149,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
 export GO_ROOT=/usr/local/go
 PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$GO_ROOT/bin
-
-# not sure this is a good idea :D
-# if not already in tmux session start a new session or show existing sessions
-if [[ -z "$TMUX" ]] ; then
-    if [[ -n $(pgrep tmux) ]] ; then
-        if [ !$(tm) ] ; then
-            tm main
-        fi
-    else
-        tm main
-    fi
-fi
 
 [ -d "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 

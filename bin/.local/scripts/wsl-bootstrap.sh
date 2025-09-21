@@ -119,7 +119,7 @@ install_dotnet() {
         ---------------- .NET -------------------
         -----------------------------------------
     "
-    wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
 
@@ -180,6 +180,47 @@ install_docker() {
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 }
 
+install_kubectl() {
+    echo "
+        ----------------------------------------------
+        ---------------- kubectl ---------------------
+        ----------------------------------------------
+    "
+    KUBECTL_VER=1.34.0
+    curl -L https://dl.k8s.io/release/v$KUBECTL_VER/bin/linux/amd64/kubectl -o $HOME/.local/bin/kubectl
+    curl -LO https://dl.k8s.io/release/v$KUBECTL_VER/bin/linux/amd64/kubectl.sha256
+    echo "$(cat kubectl.sha256)  $HOME/.local/bin/kubectl" | sha256sum --check
+    if [ "$?" -eq 0 ]; then
+        chmod +x $HOME/.local/bin/kubectl
+    fi
+}
+
+install_pwsh() {
+    echo "
+        ----------------------------------------------
+        ---------------- pwsh ------------------------
+        ----------------------------------------------
+    "
+    # Temporary because https://github.com/PowerShell/PowerShell/issues/25865
+    if [ -z $(apt list --installed | grep 'packages-microsoft-prod') ]; then
+        sudo apt install powershell
+        return 0
+    fi
+    pwsh_version="7.5.3"
+    curl -L "https://github.com/PowerShell/PowerShell/releases/download/v$pwsh_version/powershell_$pwsh_version-1.deb_amd64.deb" -o pwsh.deb
+    if command -v iconv >/dev/null; then
+        curl -LO https://github.com/PowerShell/PowerShell/releases/download/v$pwsh_version/hashes.sha256
+        checksum=$(iconv -f UTF-16 -t UTF-8 hashes.sha256 | awk '/deb/ { print $1 }')
+        if ! echo "$checksum  pwsh.deb" | sha256sum --check >/dev/null 2>&1; then
+            rm pwsh.deb
+            return 1
+        fi
+    fi
+    sudo dpkg -i -y pwsh.deb
+    sudo apt-get install -f
+    rm pwsh.deb
+}
+
 # .local/bin
 if [ ! -d "$HOME/.local/bin" ]; then
     mkdir -p $HOME/.local/bin
@@ -209,11 +250,12 @@ sudo apt install -y \
     wget \
     file \
     git \
-    man-db
+    man-db \
+    starship
 
 SELECTED_ARG=$1
 FORCE_ARG=$2
-declare -a SELECTED=("nvm" "go" "zoxide" "fd" "rg" "fzf" "yazi" "dotnet" "az" "nvim" "zk" "docker")
+declare -a SELECTED=("nvm" "go" "zoxide" "fd" "rg" "fzf" "yazi" "dotnet" "az" "nvim" "zk" "docker" "kubectl" "pwsh")
 FORCE=1
 
 if [ -n "$SELECTED_ARG" ]; then
@@ -285,4 +327,14 @@ fi
 # docker
 if contains_ignore_case "docker" "${SELECTED[@]}" && { ! command -v docker >/dev/null || [[ $FORCE -eq 0 ]]; }; then
     install_docker
+fi
+
+# kubectl
+if contains_ignore_case "kubectl" "${SELECTED[@]}" && { ! command -v kubectl >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_kubectl
+fi
+
+# pwsh
+if contains_ignore_case "pwsh" "${SELECTED[@]}" && { ! command -v pwsh >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_pwsh
 fi
