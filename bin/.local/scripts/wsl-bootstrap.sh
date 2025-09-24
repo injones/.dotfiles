@@ -119,7 +119,7 @@ install_dotnet() {
         ---------------- .NET -------------------
         -----------------------------------------
     "
-    wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    wget https://packages.microsoft.com/config/debian/$debian_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
 
@@ -257,6 +257,7 @@ SELECTED_ARG=$1
 FORCE_ARG=$2
 declare -a SELECTED=("nvm" "go" "zoxide" "fd" "rg" "fzf" "yazi" "dotnet" "az" "nvim" "zk" "docker" "kubectl" "pwsh")
 FORCE=1
+debian_version=$(cat /etc/os-release | sed -n -e 's/VERSION_ID="\([0-9][0-9]*\)\"/\1/p')
 
 if [ -n "$SELECTED_ARG" ]; then
     IFS=',' read -r -a SELECTED <<< "$SELECTED_ARG"
