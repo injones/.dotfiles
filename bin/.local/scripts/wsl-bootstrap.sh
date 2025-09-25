@@ -178,6 +178,7 @@ install_docker() {
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+    sudo usermod -aG docker $USER
 }
 
 install_kubectl() {
@@ -221,6 +222,29 @@ install_pwsh() {
     rm pwsh.deb
 }
 
+install_helm() {
+    echo "
+        ----------------------------------------------
+        ---------------- helm ------------------------
+        ----------------------------------------------
+    "
+    curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+    echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+    sudo apt-get update
+    sudo apt-get install helm
+}
+
+install_minikube() {
+    echo "
+        --------------------------------------------------
+        ---------------- minikube ------------------------
+        --------------------------------------------------
+    "
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+    sudo dpkg -i minikube_latest_amd64.deb
+    rm minikube_latest_amd64.deb
+}
+
 # .local/bin
 if [ ! -d "$HOME/.local/bin" ]; then
     mkdir -p $HOME/.local/bin
@@ -236,6 +260,8 @@ sudo apt-get upgrade -y
 
 # apt packages
 sudo apt install -y \
+    gpg \
+    apt-transport-https \
     unzip \
     build-essential \
     xsel \
@@ -253,21 +279,28 @@ sudo apt install -y \
     man-db \
     starship
 
-SELECTED_ARG=$1
-FORCE_ARG=$2
-declare -a SELECTED=("nvm" "go" "zoxide" "fd" "rg" "fzf" "yazi" "dotnet" "az" "nvim" "zk" "docker" "kubectl" "pwsh")
+declare -a SELECTED=("nvm" "go" "zoxide" "fd" "rg" "fzf" "yazi" "dotnet" "az" "nvim" "zk" "docker" "kubectl" "pwsh" "helm" "minikube")
 FORCE=1
 debian_version=$(cat /etc/os-release | sed -n -e 's/VERSION_ID="\([0-9][0-9]*\)\"/\1/p')
+
+while getopts "fi:" opt; do
+    case $opt in
+        f ) FORCE=0                  ;;
+        i ) SELECTED_ARG="$OPTARG"   ;;
+    esac
+done
+shift $(( $OPTIND - 1 ))
 
 if [ -n "$SELECTED_ARG" ]; then
     IFS=',' read -r -a SELECTED <<< "$SELECTED_ARG"
 fi
 
-if [[ -n "$FORCE_ARG" ]] && contains_ignore_case "$FORCE_ARG" "yes" "y" "true" "1"; then
-    FORCE=0
+if [[ $FORCE -eq 0 ]]; then
+    echo "Installing (forced):"
+else
+    echo "Installing:"
 fi
 
-echo "Installing:"
 printf "%s\n" "${SELECTED[@]}"
 
 # node
@@ -318,7 +351,7 @@ fi
 # nvim
 if contains_ignore_case "nvim" "${SELECTED[@]}" && { ! command -v nvim >/dev/null || [[ $FORCE -eq 0 ]]; }; then
     install_nvim
-fi  
+fi
 
 # zk
 if contains_ignore_case "zk" "${SELECTED[@]}" && { ! command -v zk >/dev/null || [[ $FORCE -eq 0 ]]; }; then
@@ -338,4 +371,14 @@ fi
 # pwsh
 if contains_ignore_case "pwsh" "${SELECTED[@]}" && { ! command -v pwsh >/dev/null || [[ $FORCE -eq 0 ]]; }; then
     install_pwsh
+fi
+
+# helm
+if contains_ignore_case "helm" "${SELECTED[@]}" && { ! command -v helm >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_helm
+fi
+
+# minikube
+if contains_ignore_case "minikube" "${SELECTED[@]}" && { ! command -v minikube >/dev/null || [[ $FORCE -eq 0 ]]; }; then
+    install_minikube
 fi

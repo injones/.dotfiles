@@ -28,12 +28,16 @@ error_symbol = '[✗](bold red)'
 [package]
 disabled = true
 
+[git_branch]
+style = 'bold fg:#F05133'
+
 [kubernetes]
 disabled = false
+format = '[\[☸  $context \($namespace\)\]](dimmed purple) '
 
 [username]
 disabled = false
 show_always = true
 
 [azure]
-disabled = false
+disabled = true

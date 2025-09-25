@@ -1,14 +1,16 @@
 $ENV:STARSHIP_CONFIG = "$HOME\.starship\starship.toml"
 
 # setup bash controls
-Set-PSReadLineKeyHandler -Key Ctrl+N -Function NextHistory
-Set-PSReadLineKeyHandler -Key Ctrl+P -Function PreviousHistory
-Set-PSReadLineKeyHandler -Key Ctrl+A -Function BeginningOfLine
-Set-PSReadLineKeyHandler -Key Ctrl+E -Function EndOfLine
-Set-PSReadLineKeyHandler -Key Ctrl+K -Function KillLine
-Set-PSReadLineKeyHandler -Key Ctrl+U -Function BackwardKillLine
-Set-PSReadLineKeyHandler -Key Ctrl+W -Function BackwardKillWord
-Set-PSReadLineKeyHandler -Key Ctrl+Y -Function Yank
-Set-PSReadLineKeyHandler -Key Ctrl+L -Function ClearScreen
+Set-PSReadLineKeyHandler -Chord Ctrl+n -Function NextHistory
+Set-PSReadLineKeyHandler -Chord Ctrl+p -Function PreviousHistory
+Set-PSReadLineKeyHandler -Chord Ctrl+a -Function BeginningOfLine
+Set-PSReadLineKeyHandler -Chord Ctrl+e -Function EndOfLine
+Set-PSReadLineKeyHandler -Chord Ctrl+k -Function KillLine
+Set-PSReadLineKeyHandler -Chord Ctrl+u -Function BackwardKillLine
+Set-PSReadLineKeyHandler -Chord Ctrl+w -Function BackwardKillWord
+Set-PSReadLineKeyHandler -Chord Ctrl+y -Function Yank
+Set-PSReadLineKeyHandler -Chord Ctrl+l -Function ClearScreen
+Set-PSReadLineKeyHandler -Chord Ctrl+f -Function ForwardChar
+Set-PSReadLineKeyHandler -Chord Ctrl+b -Function BackwardChar
 
 Invoke-Expression (&starship init powershell)
