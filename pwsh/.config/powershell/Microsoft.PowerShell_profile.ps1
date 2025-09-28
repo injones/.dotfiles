@@ -13,4 +13,8 @@ Set-PSReadLineKeyHandler -Chord Ctrl+l -Function ClearScreen
 Set-PSReadLineKeyHandler -Chord Ctrl+f -Function ForwardChar
 Set-PSReadLineKeyHandler -Chord Ctrl+b -Function BackwardChar
 
+function debian {
+    wsl -d Debian -- $args
+}
+
 Invoke-Expression (&starship init powershell)

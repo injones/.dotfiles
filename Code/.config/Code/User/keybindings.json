@@ -503,7 +503,7 @@
 
     // Custom
     { 
-        "key": "\\", 
+        "key": "-", 
         "command": "runCommands", 
         "when": "vim.active && !inDebugRepl && vim.mode != 'Insert'", 
         "args": {
@@ -514,9 +514,9 @@
         }
     },
     { 
-        "key": "\\", 
+        "key": "-", 
         "command": "runCommands", 
-        "when": "!resourceFilename && !activeEditor && !panelFocus", 
+        "when": "!resourceFilename && !activeEditor && !panelFocus",
         "args": {
             "commands": [
                 "workbench.action.toggleSidebarVisibility",
@@ -525,7 +525,7 @@
         }
     },
     { 
-        "key": "\\", 
+        "key": "-", 
         "command": "runCommands", 
         "when": "sideBarFocus", 
         "args": {
@@ -535,6 +535,16 @@
             ]
         }
     },
+    { 
+        "key": "space s f", 
+        "command": "workbench.action.quickOpen", 
+        "when": "!resourceFilename && !activeEditor && !panelFocus && !inQuickOpen",
+    },
+    { 
+        "key": "space s g", 
+        "command": "workbench.action.findInFiles", 
+        "when": "!resourceFilename && !activeEditor && !panelFocus && !inQuickOpen",
+    },
     // Disable default Ctrl+H (Replace) binding
     {
         "key": "ctrl+h",
@@ -543,7 +553,6 @@
     },
 
     // Directional navigation with Ctrl+H, Ctrl+L, Ctrl+K, and Ctrl+J
-    
     // Ctrl+H — Left
     {
         "key": "ctrl+h",
@@ -565,7 +574,6 @@
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "sideBarFocus"
     },
-    
     {
         "key": "ctrl+n",
         "command": "selectNextSuggestion",
@@ -596,7 +604,6 @@
         "command": "workbench.action.acceptSelectedQuickOpenItem",
         "when": "inQuickOpen"
     },
-
     {
         "key": "space e",
         "command": "workbench.actions.view.problems",
@@ -704,5 +711,9 @@
         "key": "shift+=",
         "command": "workbench.action.compareEditor.nextChange",
         "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "ctrl+m",
+        "command": "-editor.action.toggleTabFocusMode"
     }
 ]

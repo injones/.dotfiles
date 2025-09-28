@@ -94,6 +94,7 @@ fi
 alias vim='nvim'
 alias bgj='background_job'
 alias vag='vagrant'
+alias less='less -R'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

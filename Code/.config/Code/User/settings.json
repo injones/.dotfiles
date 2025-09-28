@@ -1,16 +1,26 @@
 {
     "editor.lineNumbers": "relative",
     "editor.wordWrap": "on",
-    "zenMode.centerLayout": false, 
-    "zenMode.hideLineNumbers": false,
-    "zenMode.showTabs": "single",
-    "zenMode.fullScreen": false,
-    "diffEditor.ignoreTrimWhitespace": false,
     "editor.fontFamily": "JetBrainsMono Nerd Font, 'Droid Sans Mono', 'monospace', monospace",
     "editor.fontLigatures": true,
     "editor.fontSize": 16,
+    "zenMode.centerLayout": true, 
+    "zenMode.hideLineNumbers": false,
+    "zenMode.showTabs": "single",
+    "zenMode.fullScreen": false,
+    "zenMode.hideStatusBar": false,
+    "zenMode.hideActivityBar": true,
+    "zenMode.restore": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.hideUnchangedRegions.enabled": true,
     "workbench.colorTheme": "Tokyo Night",
+    "workbench.startupEditor": "none",
     "vim.leader": "<space>",
+    "vim.showMarksInGutter": true,
+    "vim.easymotion": true,
+    "vim.sneak": true,
+    "vim.highlightedyank.enable": true,
+    "vim.highlightedyank.color": "rgba(59, 119, 172, 0.5)",
     "vim.normalModeKeyBindings": [
     {
       "before": ["g", "p", "d"],
@@ -38,8 +48,16 @@
       "commands": ["references-view.findReferences"]
     },
     {
+      "before": ["g", "R"],
+      "commands": ["editor.action.referenceSearch.trigger"],
+    },
+    {
       "before": ["g", "d"],
       "commands": ["editor.action.revealDefinition"]
+    },
+    {
+      "before": ["g", "D"],
+      "commands": ["editor.action.goToDefinition"]
     },
     {
       "before": ["g", "p", "t"],
@@ -60,6 +78,7 @@
     {
       "before": ["<leader>", "s", "g"],
       "commands": ["workbench.action.findInFiles"]
+      // "commands": ["workbench.action.quickTextSearch"]
     },
     {
       "before": ["<leader>", "e"],
@@ -86,27 +105,24 @@
       "commands": ["editor.action.quickFix"]
     },
     {
-      "before": ["<leader>", "h", "s"],
+      "before": ["<leader>", "h", "S"],
       "commands": ["git.stage"]
-      // "commands": ["git.stageSelectedRanges"]
     },
-    
     {
       "before": ["<leader>", "h", "R"],
-      "commands": ["git.revertChange"]
+      "commands": ["git.unstage"]
     },
     {
       "before": ["<leader>", "h", "b"],
       "commands": ["gitlens.toggleFileBlameInDiffLeft"]
     },
     {
-      "before": ["<leader>", "h", "d"],
+      "before": ["<leader>", "h", "D"],
       "commands": ["gitlens.diffLineWithPrevious"]
     },
     {
       "before": ["<leader>", "h", "p"],
       "commands": ["editor.action.dirtydiff.next"]
-      // "commands": ["gitlens.diffLineWithPrevious"]
     },
     {
       "before": ["<leader>", "T"],
@@ -114,7 +130,8 @@
     },
     {
       "before": ["<leader>", "t", "T"],
-      "commands": ["workbench.action.closeAllEditors"]
+      "commands": ["workbench.action.closeOtherEditors"]
+      // "commands": ["workbench.action.closeAllEditors"]
     },
     {
       "before": ["<leader>", "H"],
@@ -194,20 +211,62 @@
       "before": ["<C-u>"],
       "after": ["<C-u>", "z", "z"]
     },
+    {
+      "before": ["<leader>", "h", "d"],
+      "commands": ["git.openChange"],
+    },
+    {
+      "before": ["<leader>", "y"],
+      "after": ["\"", "+", "y"]
+    },
+    {
+      "before": ["<leader>", "y"],
+      "after": ["\"", "+", "y"]
+    },
+    {
+      "before": ["<leader>", "P"],
+      "after": ["\"", "+", "p"]
+    },
+    {
+      "before": ["<leader>", "Y"],
+      "after": ["\"", "+", "Y"]
+    },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
-      "before": ["u"],
-      "after": ["git.unstageSelectedRanges"]
+      // "before": ["u"],
+      // unfortunately this only works in diff editor
+      "before": ["<leader>", "h", "u"],
+      "commands": ["git.unstageSelectedRanges"]
     },
     {
-      "before": ["r"],
-      "command": ["git.revertSelectedRanges"]
+      // "before": ["r"],
+      "before": ["<leader>", "h", "r"],
+      "commands": ["git.revertSelectedRanges"]
     },
     {
-      "before": ["s"],
+      // "before": ["s"],
+      "before": ["<leader>", "h", "s"],
       "commands": ["git.stageSelectedRanges"]
+    },
+    {
+      // paste without overwriting unamed buffer
+      "before": ["<leader>", "p"],
+      "after": ["\"", "_", "d", "P"]
+    },
+    {
+      "before": ["<leader>", "y"],
+      "after": ["\"", "+", "y"]
+    },
+    {
+      "before": ["<leader>", "P"],
+      "after": ["\"", "+", "p"]
     }
   ],
-  "diffEditor.hideUnchangedRegions.enabled": true,
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-u>"],
+      "after": []
+    }
+  ]
 }
