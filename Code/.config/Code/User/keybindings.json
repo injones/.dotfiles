@@ -505,7 +505,7 @@
     { 
         "key": "-", 
         "command": "runCommands", 
-        "when": "vim.active && !inDebugRepl && vim.mode != 'Insert'", 
+        "when": "vim.active && !inDebugRepl && vim.mode != 'Insert' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && !terminal.active", 
         "args": {
             "commands": [
                 "workbench.action.toggleSidebarVisibility",
@@ -574,6 +574,7 @@
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "sideBarFocus"
     },
+    
     {
         "key": "ctrl+n",
         "command": "selectNextSuggestion",
@@ -609,6 +610,11 @@
         "command": "workbench.actions.view.problems",
         "when": "activePanel == 'workbench.panel.markers' && focusedView == 'workbench.panel.markers.view'"
     },
+    // {
+    //     "key": "space o",
+    //     "command": "workbench.actions.view.problems",
+    //     "when": "activePanel == 'workbench.panel.markers' && focusedView == 'workbench.panel.markers.view'"
+    // },
     {
         "key": "ctrl+d",
         "command": "-editor.action.addSelectionToNextFindMatch",
@@ -673,7 +679,8 @@
         "when": "!searchInputBoxFocus && !editorTextFocus && activeViewlet == 'workbench.view.search'"
     },
     {
-        "key": "shift+q",
+        "key": "f1",
+        // "key": "shift+q",
         "command": "workbench.action.terminal.toggleTerminal",
         "when": "terminal.visible && !editorTextFocus"
     },
@@ -715,5 +722,44 @@
     {
         "key": "ctrl+m",
         "command": "-editor.action.toggleTabFocusMode"
-    }
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "editorTextFocus && !vim.active && !inputFocus"
+    },
+    {
+        "key": "a",
+        "command": "explorer.newFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "f",
+        "command": "explorer.newFolder",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "r",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "x",
+        "command": "filesExplorer.cut",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "y",
+        "command": "filesExplorer.copy",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+    },
+    {
+        "key": "p",
+        "command": "filesExplorer.paste",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "f1",
+        "command": "-workbench.action.showCommands"
+    },
 ]

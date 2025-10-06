@@ -178,3 +178,11 @@ grr() {
     local DISK=$(lsblk --output NAME,SIZE,TYPE,MOUNTPOINTS -J | jq -r '.blockdevices[] | select(.children != null) | .children[] | select(.mountpoints[] | length < 1) | .name + " : " + .size' | fzf --print0 | cut -d ":" -f 1 | xargs)
     udisksctl mount -b /dev/$DISK
 }
+
+rgp() {
+    rg "$@" -p | less -R
+}
+
+fdp() {
+    fd "$@" -c always | less -R
+}
