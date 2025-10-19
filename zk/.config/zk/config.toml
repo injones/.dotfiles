@@ -129,7 +129,7 @@ pager = "less -FIRX"
 
 # bat is a great tool to render Markdown document with syntax highlighting.
 #https://github.com/sharkdp/bat
-fzf-preview = "bat -p --color always {-1}"
+fzf-preview = "batcat -p --color always {-1}"
 
 
 # LSP

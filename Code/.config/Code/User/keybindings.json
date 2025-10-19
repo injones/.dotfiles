@@ -505,7 +505,7 @@
     { 
         "key": "-", 
         "command": "runCommands", 
-        "when": "vim.active && !inDebugRepl && vim.mode != 'Insert' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && !terminal.active", 
+        "when": "editorFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'", 
         "args": {
             "commands": [
                 "workbench.action.toggleSidebarVisibility",
@@ -649,11 +649,6 @@
         "command": "workbench.scm.action.focusPreviousInput"
     },
     {
-        "key": "escape",
-        "command": "list.focusDown",
-        "when": "inputFocus && !editorTextFocus"
-    },
-    {
         "key": "ctrl+n",
         "command": "list.focusDown",
         "when": "sideBarFocus"
@@ -672,6 +667,31 @@
         "key": "escape",
         "command": "list.focusDown",
         "when": "searchInputBoxFocus && activeViewlet == 'workbench.view.search'"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "list.focusDown",
+        "when": "sideBarFocus && inputFocus"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "search.action.focusNextSearchResult",
+        "when": "inSearchEditor && searchInputBoxFocus"
+    },
+    {
+        "key": "/",
+        "command": "search.action.focusQueryEditorWidget",
+        "when": "inSearchEditor && !searchInputBoxFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "list.scrollDown",
+        "when": "sideBarFocus && (listFocus || inputFocus)"
+    },
+    {
+        "key": "ctrl+u",
+        "command": "list.scrollUp",
+        "when": "sideBarFocus && (listFocus || inputFocus)"
     },
     {
         "key": "shift+/",

@@ -36,7 +36,7 @@ disabled = false
 format = '[\[☸  $context \($namespace\)\]](dimmed purple) '
 
 [username]
-disabled = false
+disabled = true
 show_always = true
 
 [azure]
